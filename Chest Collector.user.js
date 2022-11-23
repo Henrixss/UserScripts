@@ -11,11 +11,20 @@
 
 (function() {
     'use strict';
+    //depois de 10 seg de trocar de "canal" resetar as variaveis
+    (function(history){
+        var pushState = history.pushState;
+        history.pushState = function(state) {
+            setTimeout(prepararObservador, 10000)
+            //console.log('I am called from pushStateHook');
+            return pushState.apply(history, arguments);
+        };
+    })(window.history);
 
-    setTimeout(prepararObservador, 30000)
+    setTimeout(prepararObservador, 20000)//esperar 20 seg para dar tempo de carregar o chat
 
     function prepararObservador(){
-        //alert("p/30seg")
+        //console.log("Alou Marilene")
         if(document.querySelector(".ScCoreButtonSuccess-sc-ocjdkq-5")){
             document.querySelector(".ScCoreButtonSuccess-sc-ocjdkq-5").click()
         }
@@ -28,15 +37,12 @@
             childList: true, // observe direct children
             subtree: true, // lower descendants too
         })
-
     }
 
-    console.log("testando")
-
     function resgatarBau(){
+        console.log("Bau resgatado com sucesso")
         if(document.querySelector(".ScCoreButtonSuccess-sc-ocjdkq-5")){
             document.querySelector(".ScCoreButtonSuccess-sc-ocjdkq-5").click()
-            console.log("Bau foi resgatado com sucesso")
         }
     }
 
